@@ -22,7 +22,7 @@ export const inputChanged = (input) => ({//input === e.target
     type: `${input.id}_changed`,
     payload: input.value
 }) 
-export const fileChanged = (file) => ({
-    type: 'IMAGE_CHANGED',
-    payload: file
+export const fileChanged = (input) => ({
+    type: 'fileName_changed',
+    payload: input
 })
