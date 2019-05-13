@@ -8,10 +8,13 @@ import rootReducer from "./reducers/rootReducer";
 import * as serviceWorker from './serviceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+const registerData = {name: '',pass: '',email: '',file: null,fileName: ''};
 const initialState = {
     counter: 5,
     color: '#E0E0E0',
-    users: []
+    currentUser: 'Guest',
+    users: [],
+    registerData
 }
 const store = createStore(rootReducer,initialState,composeWithDevTools());
 
