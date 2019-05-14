@@ -5,13 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import './register.css';
+import contrastingColor from '../../services/color';
 class Register extends Component {
     render() {
         const { name, pass, email, fileName, color, currentUser } = this.props;
         const { submitData, inputChanged, fileChanged } = this.props;
         return (
-            <div>
+            <div className="Register" style = {{'background-color': color }}>
                 <Form>
                     <Form.Group controlId="ControlInput1">
                         <Row>
@@ -38,7 +39,7 @@ class Register extends Component {
                         </Row>
                     </Form.Group>
                     <Button variant="primary" size="lg" active onClick={() => submitData({ name, pass, email })}>Finish</Button>
-                    <p style={{ color }}>
+                    <p style={{ color: contrastingColor(color) }}>
                         posting as: {currentUser.name}
                     </p>
                 </Form>
