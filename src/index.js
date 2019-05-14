@@ -12,7 +12,7 @@ const registerData = {name: '',pass: '',email: '',file: null,fileName: ''};
 const initialState = {
     counter: 5,
     color: '#E0E0E0',
-    currentUser: 'Guest',
+    currentUser: {name:'Guest',pass:'',email:''},
     users: [],
     registerData
 }

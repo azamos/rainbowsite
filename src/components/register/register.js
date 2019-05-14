@@ -4,7 +4,7 @@ import * as actions from './register.actions';
 
 class Register extends Component {
     render() {
-        const {name,pass,email,fileName,file} = this.props;
+        const {name,pass,email,fileName} = this.props;
         const {submitData,inputChanged,fileChanged} = this.props;
         return (
             <div>
@@ -13,7 +13,7 @@ class Register extends Component {
                     password:<input type="password" id="pass" onChange = {inputChanged} value = {pass} />
                     email:<input type="email" id="email" onChange = {inputChanged} value = {email} />
                     profile picture<input type="file" id="fileName" value = {fileName} onChange = {(e) => fileChanged(e)} />
-                    <button onClick = { () => submitData({name,pass,email,file})}>Finish</button>
+                    <button type ="button" onClick = { () => submitData({name,pass,email})}>Finish</button>
                 </form>
             </div>
         )

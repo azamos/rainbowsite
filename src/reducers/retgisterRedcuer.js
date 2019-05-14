@@ -1,4 +1,3 @@
-import * as actions from "../components/register/register.actions";
 const registerReducer = (registerData, action) => {
     // switch (action.type) {
     //     case actions.userChanged().type:
