@@ -4,23 +4,28 @@ import * as actions from './register.actions';
 
 class Register extends Component {
     render() {
-        const {name,pass,email,fileName} = this.props;
-        const {submitData,inputChanged,fileChanged} = this.props;
+        const { name, pass, email, fileName, color ,currentUser} = this.props;
+        const { submitData, inputChanged, fileChanged } = this.props;
         return (
             <div>
                 <form>
-                    name:<input id="name" onChange = {inputChanged} value = {name}/>
-                    password:<input type="password" id="pass" onChange = {inputChanged} value = {pass} />
-                    email:<input type="email" id="email" onChange = {inputChanged} value = {email} />
-                    profile picture<input type="file" id="fileName" value = {fileName} onChange = {(e) => fileChanged(e)} />
-                    <button type ="button" onClick = { () => submitData({name,pass,email})}>Finish</button>
+                    name:<input id="name" onChange={inputChanged} value={name} />
+                    password:<input type="password" id="pass" onChange={inputChanged} value={pass} />
+                    email:<input type="email" id="email" onChange={inputChanged} value={email} />
+                    profile picture<input type="file" id="fileName" value={fileName} onChange={(e) => fileChanged(e)} />
+                    <button type="button" onClick={() => submitData({ name, pass, email })}>Finish</button>
+                    <p style={{ color }}>
+                        posting as: {currentUser.name}
+                    </p>
                 </form>
             </div>
         )
     }
 }
-const mapStateToProps = ({ registerData }) => ({//{name,pass,email,file,fileName} === state.registerData
-    ...registerData
+const mapStateToProps = ({ registerData, color, currentUser }) => ({//{name,pass,email,file,fileName} === state.registerData
+    ...registerData,
+    color,
+    currentUser
 });
 const mapDispatchToProps = (dispatch) => ({
     submitData: (data) => actions.sendData(dispatch, data),

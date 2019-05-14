@@ -7,12 +7,13 @@ import App from './App';
 import rootReducer from "./reducers/rootReducer";
 import * as serviceWorker from './serviceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { guestUser } from './constants/main';
 
 const registerData = {name: '',pass: '',email: '',file: null,fileName: ''};
 const initialState = {
     counter: 5,
     color: '#E0E0E0',
-    currentUser: {name:'Guest',pass:'',email:''},
+    currentUser: guestUser ,
     users: [],
     registerData
 }

@@ -6,6 +6,9 @@ export const fetchError = (payload) => ({
     type: 'FETCH_FAILED',
     payload
 })
+export const resetFields = () => ({
+    type: 'RESET_FIELDS'
+});
 export const sendData = (dispatch, data) => {
     fetch('http://localhost:3000/api/users', {
         method: 'POST',
@@ -16,7 +19,10 @@ export const sendData = (dispatch, data) => {
     })
         .then(res => res.json())
         .then(res => res[0])
-        .then(uName => dispatch(userChanged(uName)))
+        .then(uName => {
+            dispatch(resetFields());
+            dispatch(userChanged(uName));
+        })
         .catch(err => dispatch(fetchError(err)))
 }
 export const inputChanged = (input) => ({//input === e.target
