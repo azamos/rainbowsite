@@ -9,7 +9,7 @@ class DataCruncher extends Component {
     render() {
         const { beginFetch, users, color } = this.props;
         return (
-            <Card style={{ width: '18rem' ,'background-color': contrastingColor(color) }}>
+            <Card style={{ width: '18rem' ,'backgroundColor': contrastingColor(color) }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Text style={{ color }}>

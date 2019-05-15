@@ -12,9 +12,9 @@ class Register extends Component {
         const { name, pass, email, fileName, color, currentUser } = this.props;
         const { submitData, inputChanged, fileChanged } = this.props;
         return (
-            <div className="Register" style = {{'background-color': color }}>
+            <div className="Register" style = {{'backgroundColor': color }}>
                 <Form>
-                    <Form.Group controlId="ControlInput1">
+                    <Form.Group >
                         <Row>
                             <Col xs={6} md={4}>
                                 <Form.Label>name:</Form.Label>
@@ -26,7 +26,7 @@ class Register extends Component {
                             </Col>
                         </Row>
                     </Form.Group>
-                    <Form.Group controlId="ControlInput2">
+                    <Form.Group >
                         <Row>
                             <Col xs={6} md={4}>
                                 <Form.Label>email:</Form.Label>
