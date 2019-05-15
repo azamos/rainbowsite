@@ -1,22 +1,28 @@
 
-import { picked_color, triggered_rainbow } from "../components/colorPicker/colorPicker.actions";
+import { picked_color, triggered_rainbow , rgb_changed } from "../components/colorPicker/colorPicker.actions";
 
 const maxLim = 255;
 //const minLim = 0;
 const interval = 30;
 
-const colorIterator = (c, rgbIndex, originalColor, dispatch) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
+const colorIterator = (c, rgbIndex, originalColor, dispatch,rgb) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
     c < maxLim ?
         (() => {
             originalColor = newColor(originalColor, rgbIndex, c);
+            dispatch(rgb_changed(rgbIndex,c))
             dispatch(picked_color(originalColor))
-            dispatch(triggered_rainbow(setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch)))
+            dispatch(triggered_rainbow(setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch,rgb)))
         })() :
         (() => {
-            ++rgbIndex < 3 ? colorIterator(0, rgbIndex, originalColor, dispatch) : (() => { dispatch(triggered_rainbow(null)) })()
+            ++rgbIndex < 3 ? colorIterator(rgb[rgbIndex], rgbIndex, originalColor, dispatch,rgb) : (() => { 
+                dispatch(triggered_rainbow(null)) 
+                dispatch(rgb_changed(0,0))
+                dispatch(rgb_changed(1,0))
+                dispatch(rgb_changed(2,0))
+            })()
         })()
 
-const newColor = (originalColor, rgbIndex, value) => {
+const newColor = (originalColor, rgbIndex, value) => {//Note to self: if I want true continuity, gotta
     const newRgb = HEXtoRGB(originalColor);
     newRgb[rgbIndex] = value;
     return '#' + decToHex(newRgb[0]) + decToHex(newRgb[1]) + decToHex(newRgb[2]);
@@ -27,7 +33,7 @@ export const rainBow = (dispatch,color) => {
         clearTimeout(color.colorTimer);
         dispatch(triggered_rainbow(null))
     })() : 
-    colorIterator(0, 0, color.value, dispatch);
+    colorIterator(color.rgb[0], 0, color.value, dispatch, color.rgb);
 }
 
 export const HEXtoRGB = hexStringColor => {

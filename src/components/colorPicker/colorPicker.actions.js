@@ -7,3 +7,11 @@ export const triggered_rainbow = (id) => ({
     type: 'RAINBOW',
     payload: id
 })
+
+export const rgb_changed = (rgbIndex,value) => ({
+    type: 'RGB',
+    payload: {
+        rgbIndex,
+        value
+    }
+})

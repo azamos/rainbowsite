@@ -4,6 +4,12 @@ const colorReducer = (color, action) => {
             return { ...color, value: action.payload };
         case 'RAINBOW':
             return { ...color, colorTimer: action.payload }
+        case 'RGB':
+            const i = action.payload.rgbIndex;
+            const value = action.payload.value;
+            let x = JSON.parse(JSON.stringify(color.rgb))
+            x[i] = value;
+            return { ...color, rgb: x }
         default:
             return color;
     }
