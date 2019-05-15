@@ -12,7 +12,7 @@ import { guestUser } from './constants/main';
 const registerData = {name: '',pass: '',email: '',file: null,fileName: ''};
 const initialState = {
     counter: 5,
-    color: '#E0E0E0',
+    color: '#FFFFFF',
     currentUser: guestUser ,
     users: [],
     registerData
