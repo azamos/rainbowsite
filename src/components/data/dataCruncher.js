@@ -9,7 +9,7 @@ class DataCruncher extends Component {
     render() {
         const { beginFetch, users, color } = this.props;
         return (
-            <Card style={{ width: '18rem' ,'backgroundColor': contrastingColor(color) }}>
+            <Card style={{ width: '18rem', 'backgroundColor': contrastingColor(color) }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Text style={{ color }}>
@@ -21,9 +21,9 @@ class DataCruncher extends Component {
         )
     }
 }
-const mapStateToProps = ({ color, users }) => ({
-    users,
-    color
+const mapStateToProps = (state) => ({
+    users: state.users,
+    color: state.color.value
 });
 const mapDispatchToProps = (dispatch) => ({
     beginFetch: () => actions.dataCrunch(dispatch)

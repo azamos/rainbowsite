@@ -9,15 +9,15 @@ import * as serviceWorker from './serviceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { guestUser } from './constants/main';
 
-const registerData = {name: '',pass: '',email: '',file: null,fileName: ''};
+const registerData = { name: '', pass: '', email: '', file: null, fileName: '' };
 const initialState = {
     counter: 5,
-    color: '#FFFFFF',
-    currentUser: guestUser ,
+    color: { value: '#000000', colorTimer: null },
+    currentUser: guestUser,
     users: [],
     registerData
 }
-const store = createStore(rootReducer,initialState,composeWithDevTools());
+const store = createStore(rootReducer, initialState, composeWithDevTools());
 
 ReactDOM.render(
     <Provider store={store}>

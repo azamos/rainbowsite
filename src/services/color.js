@@ -1,19 +1,19 @@
 
-import { picked_color } from "../components/colorPicker/colorPicker.actions";
+import { picked_color, triggered_rainbow } from "../components/colorPicker/colorPicker.actions";
 
 const maxLim = 255;
-const minLim = 0;
-const interval = 10;
+//const minLim = 0;
+const interval = 30;
 
 const colorIterator = (c, rgbIndex, originalColor, dispatch) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
     c < maxLim ?
         (() => {
             originalColor = newColor(originalColor, rgbIndex, c);
             dispatch(picked_color(originalColor))
-            setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch)
+            dispatch(triggered_rainbow(setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch)))
         })() :
         (() => {
-            ++rgbIndex < 3 ? colorIterator(0, rgbIndex, originalColor, dispatch) : (() => { })()
+            ++rgbIndex < 3 ? colorIterator(0, rgbIndex, originalColor, dispatch) : (() => { dispatch(triggered_rainbow(null)) })()
         })()
 
 const newColor = (originalColor, rgbIndex, value) => {
@@ -22,7 +22,13 @@ const newColor = (originalColor, rgbIndex, value) => {
     return '#' + decToHex(newRgb[0]) + decToHex(newRgb[1]) + decToHex(newRgb[2]);
 }
 
-export const rainBow = dispatch => colorIterator(0, 0, '#000000', dispatch);
+export const rainBow = (dispatch,color) => {
+    color.colorTimer ? (()=>{
+        clearTimeout(color.colorTimer);
+        dispatch(triggered_rainbow(null))
+    })() : 
+    colorIterator(0, 0, color.value, dispatch);
+}
 
 export const HEXtoRGB = hexStringColor => {
     const decimals = hexStringColor.toLowerCase().substr(1).split('');

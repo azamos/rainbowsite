@@ -1,9 +1,11 @@
-const colorReducer = (color,action) => {
-    switch(action.type){
+const colorReducer = (color, action) => {
+    switch (action.type) {
         case 'PICKED_COLOR':
-        return action.payload;
+            return { ...color, value: action.payload };
+        case 'RAINBOW':
+            return { ...color, colorTimer: action.payload }
         default:
-        return color;
+            return color;
     }
 }
 export default colorReducer;

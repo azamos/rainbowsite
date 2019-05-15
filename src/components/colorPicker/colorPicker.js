@@ -9,8 +9,8 @@ class ColorPicker extends Component {
     const { color, picked_color , makeItRain} = this.props;
     return (
       <div>
-        <input type = "color" value = {color} onChange = {(e)=>picked_color(e.target.value)}/>
-        <Button variant="outline-danger" onClick = { makeItRain } >rainbow it</Button>
+        <input type = "color" value = {color.value} onChange = {(e)=>picked_color(e.target.value)}/>
+        <Button variant="outline-danger" onClick = { () => makeItRain(color) } >rainbow it</Button>
       </div>
     )
   }
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   picked_color: (color) => dispatch(actions.picked_color(color)),
-  makeItRain: () => rainBow(dispatch)
+  makeItRain: (c) => rainBow(dispatch,c)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps )(ColorPicker);

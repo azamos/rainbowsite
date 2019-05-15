@@ -13,7 +13,7 @@ class Register extends Component {
         const { submitData, inputChanged, fileChanged } = this.props;
         return (
             <div className="Register" style = {{'backgroundColor': color }}>
-                <Form>
+                <Form style={{ color: contrastingColor(color) }}>
                     <Form.Group >
                         <Row>
                             <Col xs={6} md={4}>
@@ -26,7 +26,7 @@ class Register extends Component {
                             </Col>
                         </Row>
                     </Form.Group>
-                    <Form.Group >
+                    <Form.Group  >
                         <Row>
                             <Col xs={6} md={4}>
                                 <Form.Label>email:</Form.Label>
@@ -39,7 +39,7 @@ class Register extends Component {
                         </Row>
                     </Form.Group>
                     <Button variant="primary" size="lg" active onClick={() => submitData({ name, pass, email })}>Finish</Button>
-                    <p style={{ color: contrastingColor(color) }}>
+                    <p>
                         posting as: {currentUser.name}
                     </p>
                 </Form>
@@ -49,7 +49,7 @@ class Register extends Component {
 }
 const mapStateToProps = ({ registerData, color, currentUser }) => ({//{name,pass,email,file,fileName} === state.registerData
     ...registerData,
-    color,
+    color: color.value,
     currentUser
 });
 const mapDispatchToProps = (dispatch) => ({
