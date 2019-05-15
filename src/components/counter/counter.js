@@ -8,7 +8,6 @@ class Counter extends Component {
             <button onClick={add}>+</button>
             <button onClick={dec}>-</button>
             <h1 style ={{color}}>{counter*1000}</h1>
-            {color}
         </div>;
     }
 }

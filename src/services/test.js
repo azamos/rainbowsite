@@ -3,7 +3,7 @@ import { picked_color } from "../components/colorPicker/colorPicker.actions";
 
 const maxLim = 255;
 const minLim = 0;
-const interval = 10;
+const interval = 1000;
 
 const colorIterator = (c, rgbIndex, originalColor, dispatch) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
     c < maxLim ?
