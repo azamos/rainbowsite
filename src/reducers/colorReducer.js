@@ -7,6 +7,7 @@ const colorReducer = (color, action) => {
         case 'RGB':
             const i = action.payload.rgbIndex;
             const value = action.payload.value;
+            !value?console.log(color.rgb):(()=>{})();
             let x = JSON.parse(JSON.stringify(color.rgb))
             x[i] = value;
             return { ...color, rgb: x }

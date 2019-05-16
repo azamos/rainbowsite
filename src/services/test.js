@@ -5,16 +5,7 @@ const maxLim = 255;
 const minLim = 0;
 const interval = 1000;
 
-const colorIterator = (c, rgbIndex, originalColor, dispatch) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
-    c < maxLim ?
-        (() => {
-            originalColor = newColor(originalColor, rgbIndex, c);
-            dispatch(picked_color(originalColor))
-            setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch)
-        })() :
-        (() => {
-            ++rgbIndex < 3 ? colorIterator(0, rgbIndex, originalColor, dispatch) : (() => { })()
-        })()
+
 
 const newColor = (originalColor, rgbIndex, value) => {
     const newRgb = HEXtoRGB(originalColor);
@@ -22,7 +13,7 @@ const newColor = (originalColor, rgbIndex, value) => {
     return '#' + decToHex(newRgb[0]) + decToHex(newRgb[1]) + decToHex(newRgb[2]);
 }
 
-export const rainBow = dispatch => colorIterator(0, 0, '#000000', dispatch);
+export const rainBow = dispatch => 
 
 export const HEXtoRGB = hexStringColor => {
     const decimals = hexStringColor.toLowerCase().substr(1).split('');

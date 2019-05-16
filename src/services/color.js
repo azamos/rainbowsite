@@ -1,39 +1,45 @@
 
-import { picked_color, triggered_rainbow , rgb_changed } from "../components/colorPicker/colorPicker.actions";
+import { picked_color, triggered_rainbow, rgb_changed } from "../components/colorPicker/colorPicker.actions";
 
-const maxLim = 255;
-//const minLim = 0;
+const maxLim = 256;
+const minLim = -1;
 const interval = 30;
+const inc = true;
+const dec = false;
 
-const colorIterator = (c, rgbIndex, originalColor, dispatch,rgb) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
-    c < maxLim ?
+const colorIterator = (c, rgbIndex, originalColor, dispatch, action) => //rgbIndex = 0 | 1 | 2, 0 === R, 1 === G, 2 === B
+    (action ? ++c < maxLim : --c > minLim) ? // if action === inc, then check if c<255, else, check if c>0
         (() => {
-            originalColor = newColor(originalColor, rgbIndex, c);
-            dispatch(rgb_changed(rgbIndex,c))
-            dispatch(picked_color(originalColor))
-            dispatch(triggered_rainbow(setTimeout(colorIterator, interval, ++c, rgbIndex, originalColor, dispatch,rgb)))
-        })() :
+            const nC = originalColor;
+            nC.value = newColor(originalColor.value, rgbIndex, c);
+            nC.rgb[rgbIndex] = c;
+            dispatch(picked_color(nC.value))
+            dispatch(rgb_changed(rgbIndex, c))
+            dispatch(triggered_rainbow(setTimeout(colorIterator, interval, c, rgbIndex, nC, dispatch, action)))
+        })() ://if reached max num, next color
         (() => {
-            ++rgbIndex < 3 ? colorIterator(rgb[rgbIndex], rgbIndex, originalColor, dispatch,rgb) : (() => { 
-                dispatch(triggered_rainbow(null)) 
-                dispatch(rgb_changed(0,0))
-                dispatch(rgb_changed(1,0))
-                dispatch(rgb_changed(2,0))
-            })()
+            (action ? ++rgbIndex < 3 : --rgbIndex >= 0) ?
+                colorIterator(originalColor.rgb[rgbIndex], rgbIndex, originalColor, dispatch, action) :
+                //else, switch direction
+                (() => {
+                    rgbIndex = action ? 2 : 0;
+                    colorIterator(originalColor.rgb[rgbIndex], rgbIndex, originalColor, dispatch, !action)
+                })()
         })()
 
-const newColor = (originalColor, rgbIndex, value) => {//Note to self: if I want true continuity, gotta
+const newColor = (originalColor, rgbIndex, value) => {
     const newRgb = HEXtoRGB(originalColor);
     newRgb[rgbIndex] = value;
     return '#' + decToHex(newRgb[0]) + decToHex(newRgb[1]) + decToHex(newRgb[2]);
 }
 
-export const rainBow = (dispatch,color) => {
-    color.colorTimer ? (()=>{
+export const rainBow = (dispatch, color) => {
+    color.colorTimer ? (() => {
         clearTimeout(color.colorTimer);
         dispatch(triggered_rainbow(null))
-    })() : 
-    colorIterator(color.rgb[0], 0, color.value, dispatch, color.rgb);
+    })() : (() => {
+        colorIterator(color.rgb[0], 0, color, dispatch, color.rgb[2] === maxLim ? dec : inc);
+    })()
 }
 
 export const HEXtoRGB = hexStringColor => {
